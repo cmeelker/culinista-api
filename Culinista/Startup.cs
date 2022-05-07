@@ -25,6 +25,9 @@ namespace Culinista
             services.AddControllers();
             services.AddDbContext<RecipeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
+            services.AddCors(options => options.AddDefaultPolicy(
+                builder => builder.WithOrigins("http://localhost:3000", "https://culinista.z6.web.core.windows.net")));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Culinista", Version = "v1" });
@@ -46,6 +49,8 @@ namespace Culinista
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
