@@ -15,6 +15,20 @@ namespace Culinista.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Ingredients { get; set; }
+        public Ingredient[] Ingredients { get; set; }
+        public Instruction[] Instructions { get; set; }
+    }
+
+    public class Ingredient
+    {
+        [Key]
+        public string Name { get; set; }
+        public string Unit { get; set; }
+    }
+
+    public class Instruction
+    {
+        [Key]
+        public string Description { get; set; }
     }
 }

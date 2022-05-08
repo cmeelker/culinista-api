@@ -23,21 +23,18 @@ namespace Culinista.Controllers
             _recipeContext = recipeContext;
         }
 
-        // GET: api/<EmployeeController>
         [HttpGet]
         public IEnumerable<Recipe> Get()
         {
             return _recipeContext.Recipes;
         }
 
-        // GET api/<EmployeeController>/5
         [HttpGet("{id}")]
         public Recipe Get(int id)
         {
             return _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
         }
 
-        // POST api/<EmployeeController>
         [HttpPost]
         public void Post([FromBody] Recipe value)
         {
@@ -45,7 +42,6 @@ namespace Culinista.Controllers
             _recipeContext.SaveChanges();
         }
 
-        // PUT api/<EmployeeController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Recipe value)
         {
@@ -57,7 +53,6 @@ namespace Culinista.Controllers
             }
         }
 
-        // DELETE api/<EmployeeController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
@@ -68,39 +63,5 @@ namespace Culinista.Controllers
                 _recipeContext.SaveChanges();
             }
         }
-        //private readonly IConfiguration _configuration;
-
-        //public RecipeController(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //}
-        //[HttpGet]
-        //public IEnumerable<Recipe> Get()
-        //{
-        //    var recipes = GetRecipes();
-        //    return recipes;
-        //}
-        //private IEnumerable<Recipe> GetRecipes()
-        //{
-        //    var recipes = new List<Recipe>();
-        //    using (var connection = new SqlConnection(_configuration.GetConnectionString("Database")))
-        //    {
-        //        var sql = "SELECT * FROM Recipes";
-        //        connection.Open();
-        //        using SqlCommand command = new SqlCommand(sql, connection);
-        //        using SqlDataReader reader = command.ExecuteReader();
-        //        while (reader.Read())
-        //        {
-        //            var recipe = new Recipe()
-        //            {
-        //                Id = (int)reader["Id"],
-        //                Title = reader["Title"].ToString(),
-        //                Ingredients = reader["Ingredients"].ToString(),
-        //            };
-        //            recipes.Add(recipe);
-        //        }
-        //    }
-        //    return recipes;
-        //}
     }
 }

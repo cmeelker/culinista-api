@@ -12,20 +12,20 @@ namespace Culinista.Context
         {
             if (!dbContext.Recipes.Any())
             {
-                dbContext.Recipes.Add(new Recipe
-                {
+                //dbContext.Recipes.Add(new Recipe
+                //{
                     
-                    Title = "Paprikasoep",
-                    Ingredients = "Paprika"
-                });
+                //    Title = "Paprikasoep",
+                //    Ingredients = "Paprika"
+                //});
 
-                dbContext.Recipes.Add(new Recipe
-                {
-                    Title = "Erwtensoep",
-                    Ingredients = "Erwten"
-                });
+                //dbContext.Recipes.Add(new Recipe
+                //{
+                //    Title = "Erwtensoep",
+                //    Ingredients = "Erwten"
+                //});
 
-                dbContext.SaveChanges();
+                //dbContext.SaveChanges();
             }
         }
     }
