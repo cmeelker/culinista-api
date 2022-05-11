@@ -16,7 +16,9 @@ namespace Culinista.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public Ingredient[] Ingredients { get; set; }
+        public int Servings { get; set; }
         public Instruction[] Instructions { get; set; }
+        public Source Source { get; set; }
     }
 
     public class Ingredient
@@ -30,5 +32,10 @@ namespace Culinista.Models
     {
         [Key]
         public string Description { get; set; }
+    }
+
+    public enum Source
+    {
+        AH
     }
 }

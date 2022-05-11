@@ -20,12 +20,16 @@ namespace Culinista.Crawlers
             var title = AH.GetTitle(htmlDocument);
             var ingredients = AH.GetIngredients(htmlDocument);
             var instructions = AH.GetInstructions(htmlDocument);
+            var servings = AH.GetNumberOfServings(htmlDocument);
 
-            var recipe = new Recipe
+            Recipe recipe = new()
             {
                 Title = title,
                 Ingredients = ingredients,
-                Instructions = instructions
+                Servings = servings,
+                Instructions = instructions,
+                Source = Source.AH,
+                
             };
 
             return recipe;
@@ -80,6 +84,13 @@ namespace Culinista.Crawlers
             }
 
             return instructions.ToArray();
+        }
+
+        private static int GetNumberOfServings(HtmlDocument htmlDocument)
+        {
+            var numberOfServingsString = htmlDocument.DocumentNode.Descendants("p").Where(node => node.Attributes["class"].Value.Contains("recipe-ingredients_count")).FirstOrDefault().InnerText;
+            var numberOfServings = Int32.Parse(numberOfServingsString.Split(" ")[0]);
+            return numberOfServings;
         }
     }
 }
