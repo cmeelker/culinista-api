@@ -2,6 +2,7 @@
 using Culinista.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,13 +27,13 @@ namespace Culinista.Controllers
         [HttpGet]
         public IEnumerable<Recipe> Get()
         {
-            return _recipeContext.Recipes;
+            return _recipeContext.Recipes.Include("Ingredients.Ingredient").ToList();
         }
 
         [HttpGet("{id}")]
         public Recipe Get(int id)
         {
-            return _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
+            return _recipeContext.Recipes.Include("Ingredients.Ingredient").FirstOrDefault(s => s.Id == id);
         }
 
         [HttpPost]
@@ -45,10 +46,10 @@ namespace Culinista.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Recipe value)
         {
-            var employee = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
-            if (employee != null)
+            var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
+            if (recipe != null)
             {
-                _recipeContext.Entry<Recipe>(employee).CurrentValues.SetValues(value);
+                _recipeContext.Entry<Recipe>(recipe).CurrentValues.SetValues(value);
                 _recipeContext.SaveChanges();
             }
         }
@@ -56,10 +57,10 @@ namespace Culinista.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var student = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
-            if (student != null)
+            var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
+            if (recipe != null)
             {
-                _recipeContext.Recipes.Remove(student);
+                _recipeContext.Recipes.Remove(recipe);
                 _recipeContext.SaveChanges();
             }
         }

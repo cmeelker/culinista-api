@@ -41,7 +41,7 @@ namespace Culinista.Crawlers
             return title;
         }
 
-        private static Ingredient[] GetIngredients(HtmlDocument htmlDocument)
+        private static IngredientUnit[] GetIngredients(HtmlDocument htmlDocument)
         {
             var ingredientNames = new List<string>();
             var ingredientNameDivs = htmlDocument.DocumentNode.SelectNodes("//p[contains(@class, 'ingredient_name')]");
@@ -59,12 +59,15 @@ namespace Culinista.Crawlers
                 ingredientUnits.Add(unit);
             }
 
-            var ingredients = new List<Ingredient>();
+            var ingredients = new List<IngredientUnit>();
             for (int i = 0; i < ingredientNames.Count; i++)
             {
-                var ingredient = new Ingredient
+                var ingredient = new IngredientUnit
                 {
-                    Name = ingredientNames[i],
+                    Ingredient = new Ingredient
+                    {
+                        Name = ingredientNames[i]
+                    },
                     Unit = ingredientUnits[i]
                 };
                 ingredients.Add(ingredient);
@@ -73,17 +76,17 @@ namespace Culinista.Crawlers
             return ingredients.ToArray();
         }
 
-        private static Instruction[] GetInstructions(HtmlDocument htmlDocument)
+        private static string GetInstructions(HtmlDocument htmlDocument)
         {
-            var instructions = new List<Instruction>();
+            var instructions = new List<string>();
             var preperationDivs = htmlDocument.DocumentNode.Descendants("div").Where(node => node.GetAttributeValue("class", "").Equals("recipe-steps_step__FYhB8")).ToList();
             foreach (var div in preperationDivs)
             {
                 var preparation = div.Descendants("p").FirstOrDefault().InnerText;
-                instructions.Add(new Instruction { Description = preparation});
+                instructions.Add(preparation);
             }
 
-            return instructions.ToArray();
+            return String.Join(";", instructions.ToArray());
         }
 
         private static int GetNumberOfServings(HtmlDocument htmlDocument)

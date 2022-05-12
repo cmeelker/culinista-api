@@ -15,23 +15,26 @@ namespace Culinista.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Title { get; set; }
-        public Ingredient[] Ingredients { get; set; }
+        public virtual ICollection<IngredientUnit> Ingredients { get; set; }
         public int Servings { get; set; }
-        public Instruction[] Instructions { get; set; }
+        public string Instructions { get; set; }
         public Source Source { get; set; }
     }
 
-    public class Ingredient
+    public class IngredientUnit
     {
         [Key]
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public Ingredient Ingredient { get; set; }
         public string Unit { get; set; }
     }
 
-    public class Instruction
+    [Table("Ingredient")]
+    public class Ingredient
     {
         [Key]
-        public string Description { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
     public enum Source

@@ -1,4 +1,5 @@
-﻿using Culinista.Crawlers;
+﻿using Culinista.Context;
+using Culinista.Crawlers;
 using Culinista.Models;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,19 @@ namespace Culinista.Controllers
     [Route("[controller]")]
     public class CrawlerController : ControllerBase
     {
+        private RecipeContext _recipeContext;
+
+        public CrawlerController(RecipeContext recipeContext)
+        {
+            _recipeContext = recipeContext;
+        }
+
         [HttpPost]
-        public Recipe Post([FromBody] string url)
+        public void Post([FromBody] string url)
         {
             var recipe = AH.CrawlRecipeAsync(url);
-            return recipe.Result;
+            _recipeContext.Recipes.Add(recipe.Result);
+            _recipeContext.SaveChanges();
         }
     }
 }
