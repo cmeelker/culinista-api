@@ -44,7 +44,7 @@ namespace Culinista.Crawlers
         private static Ingredient[] GetIngredients(HtmlDocument htmlDocument)
         {
             var ingredientNames = new List<string>();
-            var ingredientNameDivs = htmlDocument.DocumentNode.Descendants("p").Where(node => node.Attributes["class"].Value.Contains("recipe-ingredients-list_name")).ToList();
+            var ingredientNameDivs = htmlDocument.DocumentNode.SelectNodes("//p[contains(@class, 'ingredient_name')]");
             foreach (var div in ingredientNameDivs)
             {
                 var ingredient = div.InnerText;
@@ -52,7 +52,7 @@ namespace Culinista.Crawlers
             }
 
             var ingredientUnits = new List<string>();
-            var ingredientUnitDivs = htmlDocument.DocumentNode.Descendants("p").Where(node => node.Attributes["class"].Value.Contains("recipe-ingredients-list_unit")).ToList();
+            var ingredientUnitDivs = htmlDocument.DocumentNode.SelectNodes("//p[contains(@class, 'ingredient_unit')]");
             foreach (var div in ingredientUnitDivs)
             {
                 var unit = div.InnerText;
