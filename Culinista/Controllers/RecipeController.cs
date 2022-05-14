@@ -33,7 +33,7 @@ namespace Culinista.Controllers
         [HttpGet("{id}")]
         public Recipe Get(int id)
         {
-            return _recipeContext.Recipes.Include("Ingredients.Ingredient").FirstOrDefault(s => s.Id == id);
+            return _recipeContext.Recipes.Include("Ingredients").FirstOrDefault(s => s.Id == id);
         }
 
         [HttpPost]
