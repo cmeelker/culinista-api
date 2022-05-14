@@ -2,7 +2,7 @@
 
 namespace Culinista.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,6 +14,7 @@ namespace Culinista.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Servings = table.Column<int>(type: "int", nullable: false),
+                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Source = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -22,36 +23,20 @@ namespace Culinista.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredient",
+                name: "IngredientUnit",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RecipeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredient", x => x.Name);
+                    table.PrimaryKey("PK_IngredientUnit", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ingredient_Recipe_RecipeId",
-                        column: x => x.RecipeId,
-                        principalTable: "Recipe",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Instruction",
-                columns: table => new
-                {
-                    Description = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RecipeId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Instruction", x => x.Description);
-                    table.ForeignKey(
-                        name: "FK_Instruction_Recipe_RecipeId",
+                        name: "FK_IngredientUnit_Recipe_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipe",
                         principalColumn: "Id",
@@ -59,23 +44,15 @@ namespace Culinista.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredient_RecipeId",
-                table: "Ingredient",
-                column: "RecipeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Instruction_RecipeId",
-                table: "Instruction",
+                name: "IX_IngredientUnit_RecipeId",
+                table: "IngredientUnit",
                 column: "RecipeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Ingredient");
-
-            migrationBuilder.DropTable(
-                name: "Instruction");
+                name: "IngredientUnit");
 
             migrationBuilder.DropTable(
                 name: "Recipe");

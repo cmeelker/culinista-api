@@ -64,10 +64,7 @@ namespace Culinista.Crawlers
             {
                 var ingredient = new IngredientUnit
                 {
-                    Ingredient = new Ingredient
-                    {
-                        Name = ingredientNames[i]
-                    },
+                    Name = ingredientNames[i],
                     Unit = ingredientUnits[i]
                 };
                 ingredients.Add(ingredient);

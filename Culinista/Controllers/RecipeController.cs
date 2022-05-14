@@ -27,7 +27,7 @@ namespace Culinista.Controllers
         [HttpGet]
         public IEnumerable<Recipe> Get()
         {
-            return _recipeContext.Recipes.Include("Ingredients.Ingredient").ToList();
+            return _recipeContext.Recipes.Include("Ingredients").ToList();
         }
 
         [HttpGet("{id}")]

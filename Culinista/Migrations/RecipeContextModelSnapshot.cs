@@ -19,7 +19,7 @@ namespace Culinista.Migrations
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Culinista.Models.Ingredient", b =>
+            modelBuilder.Entity("Culinista.Models.IngredientUnit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,21 +29,6 @@ namespace Culinista.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Ingredient");
-                });
-
-            modelBuilder.Entity("Culinista.Models.IngredientUnit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("IngredientId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("RecipeId")
                         .HasColumnType("int");
 
@@ -51,8 +36,6 @@ namespace Culinista.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IngredientId");
 
                     b.HasIndex("RecipeId");
 
@@ -85,15 +68,9 @@ namespace Culinista.Migrations
 
             modelBuilder.Entity("Culinista.Models.IngredientUnit", b =>
                 {
-                    b.HasOne("Culinista.Models.Ingredient", "Ingredient")
-                        .WithMany()
-                        .HasForeignKey("IngredientId");
-
                     b.HasOne("Culinista.Models.Recipe", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId");
-
-                    b.Navigation("Ingredient");
                 });
 
             modelBuilder.Entity("Culinista.Models.Recipe", b =>
