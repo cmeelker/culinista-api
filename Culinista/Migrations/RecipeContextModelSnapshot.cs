@@ -39,7 +39,7 @@ namespace Culinista.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("IngredientUnit");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("Culinista.Models.Recipe", b =>

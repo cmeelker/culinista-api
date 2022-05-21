@@ -15,7 +15,9 @@ namespace Culinista.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Servings = table.Column<int>(type: "int", nullable: false),
                     Instructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Source = table.Column<int>(type: "int", nullable: false)
+                    Source = table.Column<int>(type: "int", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -23,7 +25,7 @@ namespace Culinista.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IngredientUnit",
+                name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -34,9 +36,9 @@ namespace Culinista.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IngredientUnit", x => x.Id);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_IngredientUnit_Recipe_RecipeId",
+                        name: "FK_Ingredients_Recipe_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipe",
                         principalColumn: "Id",
@@ -44,15 +46,15 @@ namespace Culinista.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_IngredientUnit_RecipeId",
-                table: "IngredientUnit",
+                name: "IX_Ingredients_RecipeId",
+                table: "Ingredients",
                 column: "RecipeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "IngredientUnit");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
                 name: "Recipe");

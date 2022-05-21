@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Culinista.Migrations
 {
     [DbContext(typeof(RecipeContext))]
-    [Migration("20220521212527_AddImageAndUrl")]
-    partial class AddImageAndUrl
+    [Migration("20220521220447_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace Culinista.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("IngredientUnit");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("Culinista.Models.Recipe", b =>

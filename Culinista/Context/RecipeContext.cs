@@ -17,6 +17,14 @@ namespace Culinista.Context
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Recipe>()
+                .HasMany(r => r.Ingredients)
+                .WithOne();
+        }
+
         public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<IngredientUnit> Ingredients { get; set; }
     }
 }
