@@ -26,7 +26,7 @@ namespace Culinista
             services.AddDbContext<RecipeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddCors(options => options.AddDefaultPolicy(
-                builder => builder.WithOrigins("http://localhost:3000", "https://culinista.z6.web.core.windows.net")));
+                builder => builder.WithOrigins("http://localhost:8080", "https://culinista.z6.web.core.windows.net")));
 
             services.AddSwaggerGen(c =>
             {

@@ -21,6 +21,7 @@ namespace Culinista.Crawlers
             var ingredients = AH.GetIngredients(htmlDocument);
             var instructions = AH.GetInstructions(htmlDocument);
             var servings = AH.GetNumberOfServings(htmlDocument);
+            var image = AH.GetImage(htmlDocument);
 
             Recipe recipe = new()
             {
@@ -29,7 +30,8 @@ namespace Culinista.Crawlers
                 Servings = servings,
                 Instructions = instructions,
                 Source = Source.AH,
-                
+                URL = url,
+                Image = image                
             };
 
             return recipe;
@@ -91,6 +93,13 @@ namespace Culinista.Crawlers
             var numberOfServingsString = htmlDocument.DocumentNode.Descendants("p").Where(node => node.Attributes["class"].Value.Contains("recipe-ingredients_count")).FirstOrDefault().InnerText;
             var numberOfServings = Int32.Parse(numberOfServingsString.Split(" ")[0]);
             return numberOfServings;
+        }
+
+        private static string GetImage(HtmlDocument htmlDocument)
+        {
+            var imagesDiv = htmlDocument.DocumentNode.SelectNodes("//img[contains(@class, 'figure_image')]").FirstOrDefault(); //DocumentNode.Descendants("p").Where(node => node.Attributes["class"].Value.Contains("recipe-ingredients-list")).ToList();
+            var image = imagesDiv.GetAttributeValue("data-srcset", "").Split(" ")[16];
+            return image;
         }
     }
 }
