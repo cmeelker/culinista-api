@@ -23,11 +23,12 @@ namespace Culinista.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string url)
+        public int Post([FromBody] string url)
         {
             var recipe = AH.CrawlRecipeAsync(url);
             _recipeContext.Recipes.Add(recipe.Result);
             _recipeContext.SaveChanges();
+            return recipe.Result.Id;
         }
     }
 }
