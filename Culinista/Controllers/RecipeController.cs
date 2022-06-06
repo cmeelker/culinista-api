@@ -57,7 +57,7 @@ namespace Culinista.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
+            var recipe = _recipeContext.Recipes.Include(r => r.Ingredients).FirstOrDefault(s => s.Id == id);
             if (recipe != null)
             {
                 _recipeContext.Recipes.Remove(recipe);
