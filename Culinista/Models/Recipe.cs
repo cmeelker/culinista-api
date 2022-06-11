@@ -21,6 +21,7 @@ namespace Culinista.Models
         public Source Source { get; set; }
         public string URL { get; set; }
         public string Image { get; set; }
+        public string Tags { get; set; }
     }
 
     public class IngredientUnit
