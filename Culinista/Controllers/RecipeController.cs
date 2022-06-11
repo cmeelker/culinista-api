@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Culinista.Controllers
@@ -52,6 +53,25 @@ namespace Culinista.Controllers
                 _recipeContext.Entry<Recipe>(recipe).CurrentValues.SetValues(value);
                 _recipeContext.SaveChanges();
             }
+        }
+
+        [HttpPatch("{id}")]
+        public void Patch(int id, [FromBody] Recipe value)
+        {
+            var patchableProps = new string[] { "Tags" };
+
+            var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
+            if (recipe != null)
+            {
+                var properties = typeof(Recipe).GetProperties();
+                foreach (var property in properties)
+                {
+                    var val = property.GetValue(value);
+                    if (patchableProps.Contains(property.Name)) property.SetValue(recipe, val);
+                }
+                _recipeContext.SaveChanges();
+            }
+
         }
 
         [HttpDelete("{id}")]
