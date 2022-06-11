@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Culinista.Crawlers
 {
@@ -25,13 +26,13 @@ namespace Culinista.Crawlers
 
             Recipe recipe = new()
             {
-                Title = title,
+                Title = HttpUtility.HtmlDecode(title),
                 Ingredients = ingredients,
                 Servings = servings,
-                Instructions = instructions,
+                Instructions = HttpUtility.HtmlDecode(instructions),
                 Source = Source.AH,
                 URL = url,
-                Image = image                
+                Image = image
             };
 
             return recipe;
