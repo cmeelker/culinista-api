@@ -26,10 +26,10 @@ namespace Culinista.Crawlers
 
             Recipe recipe = new()
             {
-                Title = HttpUtility.HtmlDecode(title),
+                Title = title,
                 Ingredients = ingredients,
                 Servings = servings,
-                Instructions = HttpUtility.HtmlDecode(instructions),
+                Instructions = instructions,
                 Source = Source.AH,
                 URL = url,
                 Image = image
@@ -41,7 +41,7 @@ namespace Culinista.Crawlers
         {
             var titleXPath = "//h1";
             var title = htmlDocument.DocumentNode.SelectSingleNode(titleXPath).InnerText;
-            return title;
+            return HttpUtility.HtmlDecode(title);
         }
 
         private static IngredientUnit[] GetIngredients(HtmlDocument htmlDocument)
@@ -67,7 +67,7 @@ namespace Culinista.Crawlers
             {
                 var ingredient = new IngredientUnit
                 {
-                    Name = ingredientNames[i],
+                    Name = HttpUtility.HtmlDecode(ingredientNames[i]),
                     Unit = ingredientUnits[i]
                 };
                 ingredients.Add(ingredient);
@@ -83,7 +83,7 @@ namespace Culinista.Crawlers
             foreach (var div in preperationDivs)
             {
                 var preparation = div.Descendants("p").FirstOrDefault().InnerText;
-                instructions.Add(preparation);
+                instructions.Add(HttpUtility.HtmlDecode(preparation));
             }
 
             return String.Join(";", instructions.ToArray());
