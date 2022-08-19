@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Culinista", "Culinista\Culinista.csproj", "{1BAF6C39-09DE-4A97-9C96-5328DF0A08EA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerTest", "CrawlerTest\CrawlerTest.csproj", "{B775171B-6210-4123-9CFA-D0AD72762A17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{1BAF6C39-09DE-4A97-9C96-5328DF0A08EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BAF6C39-09DE-4A97-9C96-5328DF0A08EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BAF6C39-09DE-4A97-9C96-5328DF0A08EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B775171B-6210-4123-9CFA-D0AD72762A17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B775171B-6210-4123-9CFA-D0AD72762A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B775171B-6210-4123-9CFA-D0AD72762A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B775171B-6210-4123-9CFA-D0AD72762A17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
