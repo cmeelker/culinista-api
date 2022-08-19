@@ -46,6 +46,8 @@ jobs:
           name: webapp
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
   deploy:
+    permissions:
+      id-token: write
     runs-on: windows-latest
     needs: build
     steps:
