@@ -10,6 +10,7 @@ env:
   SWASHBUCKLE_DOTNET_CORE_VERSION: 3.1.x
   API_IMPORT_DLL: Culinista\bin\Release\net5.0\Culinista.dll
   API_IMPORT_VERSION: v1
+  API_IMPORT_SPECIFICATION_PATH: Culinista\publish\swagger.json
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 5.0.x
   WORKING_DIRECTORY: Culinista
