@@ -57,7 +57,7 @@ namespace Culinista.Controllers
         [HttpGet("{id}")]
         public IEnumerable<Recipe> Get(string id)
         {
-            var favorites = _recipeContext.Favorites.Include(f => f.Recipe).ThenInclude(r => r.Ingredients).Where(f => f.UserId == id);
+            var favorites = _recipeContext.Favorites.Include(f => f.Recipe).Where(f => f.UserId == id);
             return from fav in favorites select fav.Recipe;
         }
     }

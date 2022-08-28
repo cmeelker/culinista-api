@@ -1,16 +1,10 @@
 ﻿using Culinista.Context;
 using Culinista.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Culinista.Controllers
 {
@@ -28,13 +22,13 @@ namespace Culinista.Controllers
         [HttpGet]
         public IEnumerable<Recipe> Get()
         {
-            return _recipeContext.Recipes.Include("Ingredients").ToList();
+            return _recipeContext.Recipes.ToList();
         }
 
         [HttpGet("{id}")]
         public Recipe Get(int id)
         {
-            return _recipeContext.Recipes.Include("Ingredients").FirstOrDefault(s => s.Id == id);
+            return _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
         }
 
         [HttpPost]
@@ -77,7 +71,7 @@ namespace Culinista.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var recipe = _recipeContext.Recipes.Include(r => r.Ingredients).FirstOrDefault(s => s.Id == id);
+            var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
             if (recipe != null)
             {
                 _recipeContext.Recipes.Remove(recipe);
