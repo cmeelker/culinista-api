@@ -35,9 +35,12 @@ namespace Culinista.Crawlers
         {
             var urls = htmlDocument.DocumentNode.Descendants("img")
                                 .Select(e => e.GetAttributeValue("src", null))
-                                .Where(s => !string.IsNullOrEmpty(s)).ToArray();
+                                .Where(s => !string.IsNullOrEmpty(s));
 
-            this.Images = urls;
+
+            var filteredUrls = urls.Distinct().Where(url => url.EndsWith(".jpg") | url.EndsWith(".png")).ToArray();
+
+            this.Images = filteredUrls;
         }
     }
 }
