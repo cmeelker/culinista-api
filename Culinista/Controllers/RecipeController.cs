@@ -32,10 +32,11 @@ namespace Culinista.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] Recipe value)
+        public int Post([FromBody] Recipe recipe)
         {
-            _recipeContext.Recipes.Add(value);
+            _recipeContext.Recipes.Add(recipe);
             _recipeContext.SaveChanges();
+            return recipe.Id;
         }
 
         [HttpPut("{id}")]
