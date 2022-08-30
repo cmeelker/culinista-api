@@ -28,8 +28,16 @@ namespace Culinista.Crawlers
 
         private void GetTitle(HtmlDocument htmlDocument)
         {
-            var titleXPath = "//h1";
-            var title = htmlDocument.DocumentNode.SelectSingleNode(titleXPath).InnerText;
+            string title;
+            try
+            {
+                title = htmlDocument.DocumentNode.SelectSingleNode("//h1").InnerText;
+            }
+            catch
+            {
+                title = htmlDocument.DocumentNode.SelectSingleNode("//h2").InnerText;
+            }
+
             this.Title = HttpUtility.HtmlDecode(title);
         }
 
