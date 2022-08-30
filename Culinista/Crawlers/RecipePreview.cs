@@ -10,6 +10,7 @@ namespace Culinista.Crawlers
     {
         public string Title { get; set; }
         public string[] Images { get; set; }
+        public string Favicon { get; set; }
 
         public RecipePreview() { }
 
@@ -22,6 +23,7 @@ namespace Culinista.Crawlers
 
             this.GetTitle(htmlDocument);
             this.GetImages(htmlDocument);
+            this.GetFavicon(htmlDocument);
         }
 
         private void GetTitle(HtmlDocument htmlDocument)
@@ -41,6 +43,15 @@ namespace Culinista.Crawlers
             var filteredUrls = urls.Distinct().Where(url => url.EndsWith(".jpg") | url.EndsWith(".png")).ToArray();
 
             this.Images = filteredUrls;
+        }
+
+        private void GetFavicon(HtmlDocument htmlDocument)
+        {
+            var favicon = htmlDocument.DocumentNode.SelectSingleNode("/html/head/link[@rel='icon' and @href]");
+            if (favicon != null)
+            {
+                this.Favicon = favicon.Attributes["href"].Value;
+            }
         }
     }
 }

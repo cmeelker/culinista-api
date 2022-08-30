@@ -14,5 +14,6 @@ namespace Culinista.Models
         public string URL { get; set; }
         public string Image { get; set; }
         public string Tags { get; set; }
+        public string Favicon { get; set; }
     }
 }
