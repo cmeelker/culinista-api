@@ -9,7 +9,7 @@ namespace Culinista.Controllers
     public class CrawlerController : ControllerBase
     {
         [HttpGet]
-        public async Task<RecipePreview> GetAsync([FromQuery] string url)
+        public async Task<RecipePreview> GetRecipePreview([FromQuery] string url)
         {
             var recipePreview = new RecipePreview();
             await recipePreview.CrawlRecipePreview(url);

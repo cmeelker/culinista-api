@@ -20,38 +20,27 @@ namespace Culinista.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Recipe> Get()
+        public IEnumerable<Recipe> GetRecipes()
         {
             return _recipeContext.Recipes.ToList();
         }
 
         [HttpGet("{id}")]
-        public Recipe Get(int id)
+        public Recipe GetRecipe(int id)
         {
             return _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
         }
 
         [HttpPost]
-        public int Post([FromBody] Recipe recipe)
+        public int AddRecipe([FromBody] Recipe recipe)
         {
             _recipeContext.Recipes.Add(recipe);
             _recipeContext.SaveChanges();
             return recipe.Id;
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Recipe value)
-        {
-            var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
-            if (recipe != null)
-            {
-                _recipeContext.Entry<Recipe>(recipe).CurrentValues.SetValues(value);
-                _recipeContext.SaveChanges();
-            }
-        }
-
         [HttpPatch("{id}")]
-        public void Patch(int id, [FromBody] Recipe value)
+        public void UpdateRecipe(int id, [FromBody] Recipe value)
         {
             var patchableProps = new string[] { "Tags" };
 
@@ -70,7 +59,7 @@ namespace Culinista.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeleteRecipe(int id)
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
             if (recipe != null)

@@ -1,14 +1,9 @@
 ﻿using Culinista.Context;
-using Culinista.Crawlers;
 using Culinista.Models;
-using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Culinista.Controllers
 {
@@ -24,15 +19,16 @@ namespace Culinista.Controllers
         }
 
         [HttpPost]
-        public void Post([FromQuery] string userId, [FromQuery] int recipeId)
+        public void EditFavorite([FromQuery] string userId, [FromQuery] int recipeId)
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(r => r.Id == recipeId);
             var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
-            
+
             if (favorite != null)
             {
                 _recipeContext.Favorites.Remove(favorite);
-            } else
+            }
+            else
             {
                 Favorite newFavorite = new()
                 {
@@ -46,16 +42,15 @@ namespace Culinista.Controllers
         }
 
         [HttpGet]
-        public bool Get([FromQuery] string userId, [FromQuery] int recipeId)
+        public bool IsFavorite([FromQuery] string userId, [FromQuery] int recipeId)
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(r => r.Id == recipeId);
             var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
             return favorite != null;
-
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Recipe> Get(string id)
+        public IEnumerable<Recipe> GetFavorites(string id)
         {
             var favorites = _recipeContext.Favorites.Include(f => f.Recipe).Where(f => f.UserId == id);
             return from fav in favorites select fav.Recipe;
