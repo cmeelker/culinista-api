@@ -33,6 +33,7 @@ namespace Culinista.Controllers
             _recipeContext.Favorites.Remove(favorite);
         }
 
+        // TO DO: Use FromBody
         [HttpPost]
         public void ToggleFavorite([FromQuery] string userId, [FromQuery] int recipeId)
         {
@@ -58,18 +59,18 @@ namespace Culinista.Controllers
             _recipeContext.SaveChanges();
         }
 
-        [HttpGet]
-        public bool IsFavorite([FromQuery] string userId, [FromQuery] int recipeId)
+        [HttpGet("{recipeId}")]
+        public bool IsFavorite([FromQuery] string userId, int recipeId)
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(r => r.Id == recipeId);
             var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
             return favorite != null;
         }
 
-        [HttpGet("{id}")]
-        public IEnumerable<Recipe> GetFavorites(string id)
+        [HttpGet]
+        public IEnumerable<Recipe> GetFavorites([FromQuery] string userId)
         {
-            var favorites = _recipeContext.Favorites.Include(f => f.Recipe).Where(f => f.UserId == id);
+            var favorites = _recipeContext.Favorites.Include(f => f.Recipe).Where(f => f.UserId == userId);
             return from fav in favorites select fav.Recipe;
         }
     }
