@@ -18,24 +18,41 @@ namespace Culinista.Controllers
             _recipeContext = recipeContext;
         }
 
+        private void AddRecipe(string userId, Recipe recipe)
+        {
+            Favorite newFavorite = new()
+            {
+                UserId = userId,
+                Recipe = recipe,
+            };
+            _recipeContext.Favorites.Add(newFavorite);
+        }
+
+        private void DeleteRecipe(Favorite favorite)
+        {
+            _recipeContext.Favorites.Remove(favorite);
+        }
+
         [HttpPost]
-        public void EditFavorite([FromQuery] string userId, [FromQuery] int recipeId)
+        public void ToggleFavorite([FromQuery] string userId, [FromQuery] int recipeId)
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(r => r.Id == recipeId);
-            var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
 
-            if (favorite != null)
+            if (recipe == null)
             {
-                _recipeContext.Favorites.Remove(favorite);
+                return;
+            }
+
+            bool isFavorite = _recipeContext.Favorites.Any(f => (f.UserId == userId) && (f.Recipe.Id == recipeId));
+
+            if (isFavorite)
+            {
+                var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
+                DeleteRecipe(favorite);
             }
             else
             {
-                Favorite newFavorite = new()
-                {
-                    UserId = userId,
-                    Recipe = recipe,
-                };
-                _recipeContext.Favorites.Add(newFavorite);
+                AddRecipe(userId, recipe);
             }
 
             _recipeContext.SaveChanges();
