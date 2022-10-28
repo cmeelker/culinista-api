@@ -64,7 +64,7 @@ namespace Culinista.Controllers
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(r => r.Id == recipeId);
             var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
-            return favorite != null;
+            return favorite.Recipe != null;
         }
 
         [HttpGet]
