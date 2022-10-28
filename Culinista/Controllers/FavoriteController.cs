@@ -48,7 +48,7 @@ namespace Culinista.Controllers
 
             if (isFavorite)
             {
-                var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
+                var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (f.Recipe.Id == recipeId));
                 DeleteRecipe(favorite);
             }
             else
