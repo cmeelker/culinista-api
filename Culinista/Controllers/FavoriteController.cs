@@ -63,8 +63,8 @@ namespace Culinista.Controllers
         public bool IsFavorite([FromQuery] string userId, int recipeId)
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(r => r.Id == recipeId);
-            var favorite = _recipeContext.Favorites.FirstOrDefault(f => (f.UserId == userId) && (recipe.Id == recipeId));
-            return favorite.Recipe != null;
+            var isFavorite = _recipeContext.Favorites.Any(f => (f.UserId == userId) && (f.Recipe.Id == recipeId));
+            return isFavorite;
         }
 
         [HttpGet]
