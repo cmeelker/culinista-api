@@ -22,7 +22,9 @@ namespace Culinista.Controllers
         [HttpGet]
         public IEnumerable<Recipe> GetRecipes()
         {
-            return _recipeContext.Recipes.ToList();
+            var recipes = _recipeContext.Recipes.ToList();
+            recipes.Reverse();
+            return recipes;
         }
 
         [HttpGet("{id}")]
