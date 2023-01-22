@@ -26,7 +26,7 @@ namespace Culinista
             services.AddDbContext<RecipeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddCors(options => options.AddDefaultPolicy(
-                builder => builder.WithOrigins("http://localhost:8080", "https://culinista.azurewebsites.net", "https://culinista.nl").AllowAnyHeader().WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")));
+                builder => builder.WithOrigins("http://localhost:8080", "https://culinista.azurewebsites.net", "https://culinista.nl", "https://brave-beach-0d9df0103.2.azurestaticapps.net/").AllowAnyHeader().WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")));
 
             services.AddSwaggerGen(c =>
             {
