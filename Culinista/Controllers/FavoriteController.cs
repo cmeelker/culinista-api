@@ -1,5 +1,6 @@
 ﻿using Culinista.Context;
 using Culinista.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 namespace Culinista.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class FavoriteController : ControllerBase
     {

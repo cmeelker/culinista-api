@@ -1,11 +1,14 @@
 using Culinista.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 namespace Culinista
 {
@@ -21,12 +24,25 @@ namespace Culinista
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddDbContext<RecipeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddCors(options => options.AddDefaultPolicy(
                 builder => builder.WithOrigins("http://localhost:8080", "https://culinista.azurewebsites.net", "https://culinista.nl", "https://www.culinista.nl", "https://brave-beach-0d9df0103.2.azurestaticapps.net").AllowAnyHeader().WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")));
+
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = domain;
+                    options.Audience = Configuration["Auth0:Audience"];
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = ClaimTypes.NameIdentifier
+                    };
+                });
 
             services.AddSwaggerGen(c =>
             {
@@ -52,6 +68,7 @@ namespace Culinista
 
             app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,5 +1,6 @@
 ﻿using Culinista.Context;
 using Culinista.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,6 +35,7 @@ namespace Culinista.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public int AddRecipe([FromBody] Recipe recipe)
         {
             _recipeContext.Recipes.Add(recipe);
@@ -42,6 +44,7 @@ namespace Culinista.Controllers
         }
 
         [HttpPatch("{id}")]
+        [Authorize]
         public void UpdateRecipe(int id, [FromBody] Recipe value)
         {
             var patchableProps = new string[] { "Tags" };
@@ -61,6 +64,7 @@ namespace Culinista.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public void DeleteRecipe(int id)
         {
             var recipe = _recipeContext.Recipes.FirstOrDefault(s => s.Id == id);
